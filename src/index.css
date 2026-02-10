@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+};
+
+@font-face {
+  font-family: 'Poppins-Regular';;
+  src: url('./src/assets/font/Poppins-Regular.ttf');
+}
+
+@theme {
+
+  /* VARIABLES DE PALETA DE COLORES */
+  --color-kapital-blue: #184064;
+  --color-kapital-lightbue: #2a8bbf;
+  --color-kapital-green: #93c021;
+  --color-kapital-white: #f8fcff;
+  --color-kapital-darkgrey: #091622;
+  --color-kapital-grey: #28323c;
+  --color-kapital-lightgrey: #ebebeb;
+  
+  /* BACKGROUNDS GRADIENTS */
+  --background-image-kapital-gradienthero: linear-gradient(278.96deg, #FFFFFF 15.97%, #184064 47.74%);
+  --background-image-kapital-gradientform: linear-gradient(180deg, #2A8BBF 0%, #184064 100%);
+
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+  padding: 5rem 10rem;
+  max-width: 1440px;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.img-shadow-drop-left {
+  filter: drop-shadow(-8px 8px 5px rgba(40, 50, 60, 0.9));
+}
+
+.img-shadow-drop-right {
+  filter: drop-shadow(8px 8px 5px rgba(40, 50, 60, 0.9));
+}
+
+@media (max-width: 850px) {
+  .container {
+    padding: 5rem;
+  }
+}
