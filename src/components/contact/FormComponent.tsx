@@ -1,23 +1,5 @@
 import React, { useState, type ChangeEvent, type SyntheticEvent, useCallback } from 'react';
-
-interface FormData {
-  nombre: string;
-  correo: string;
-  telefono: string;
-  mensaje: string;
-  politicas: boolean;
-  avisoLegal: boolean;
-}
-
-interface FormErrors {
-  nombre?: string;
-  correo?: string;
-  telefono?: string;
-  mensaje?: string;
-  politicas?: string;
-  avisoLegal?: string;
-  submit?: string;
-}
+import { type FormData, type FormErrors } from '../../types/grlInterfaces';
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^[0-9+\-\s()]{9,}$/;

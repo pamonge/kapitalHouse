@@ -3,19 +3,14 @@ import kapitalLogo from '../../assets/img/heroSection/Logo.png';
 import { LinkComponent } from './LinkComponent';
 import { GRL_STYLES } from '../../styles/generalStyles';
 import { Link } from 'react-router-dom';
-
-interface LinkName {
-  destinyLink: string;
-  name: string;
-  styles?: string;
-}
+import { type linkProps } from '../../types/grlInterfaces';
 
 export const NavBarComponent: React.FC = () => {
-  const LINKSLIST: LinkName[] = [
-    {destinyLink: '/', name: 'Inicio'},
-    {destinyLink: '/mortgage', name: 'Hipotecas'},
-    {destinyLink: '/us', name: 'Nosotros'},
-    {destinyLink: '/contact', name: 'Contacto', styles: `${GRL_STYLES.greenBGLink} ${GRL_STYLES.defaulLinkComp}`}
+  const LINKSLIST: linkProps[] = [
+    {lnk: '/', name: 'Inicio'},
+    {lnk: '/mortgage', name: 'Hipotecas'},
+    {lnk: '/us', name: 'Nosotros'},
+    {lnk: '/contact', name: 'Contacto', styles: `${GRL_STYLES.greenBGLink} ${GRL_STYLES.defaulLinkComp}`}
   ];
 
   return (
@@ -30,7 +25,7 @@ export const NavBarComponent: React.FC = () => {
           LINKSLIST.map((destiny, key) => (
             <LinkComponent 
               key={key} 
-              lnk={destiny.destinyLink}
+              lnk={destiny.lnk}
               name={destiny.name}
               styles={destiny.styles} 
             />         

@@ -2,6 +2,7 @@ import React from 'react'
 import { DescriptionComponent } from '../general/DescriptionComponent'
 import keysOnStairs from '../../assets/mortgage/keysOnStairs.png'
 import { MortgageBlueBannerComponent } from './MortgageBlueBannerComponent'
+import { OurProcesComponent } from './OurProcesComponent'
 
 export const MortgageContainerComponent: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ export const MortgageContainerComponent: React.FC = () => {
             }
         />
         <MortgageBlueBannerComponent />
+        <OurProcesComponent />
     </div>
   )
 }

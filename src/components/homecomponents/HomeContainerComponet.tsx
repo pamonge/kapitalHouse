@@ -3,10 +3,13 @@ import { CreditSecurityComponent } from './CreditSecurityComponent'
 import { BlueBannerComponent } from '../general/BlueBannerComponent'
 import { LinkComponent } from '../navigation/LinkComponent'
 import { GRL_STYLES } from '../../styles/generalStyles'
+import { MakeItPosible } from './MakeItPosible'
+import { OurServicesComponent } from './OurServicesComponent'
 
 export const HomeContainerComponet: React.FC = () => {
   return (
     <div className='container ' >
+        <MakeItPosible />
         <CreditSecurityComponent />
         <BlueBannerComponent 
             content={
@@ -26,6 +29,7 @@ export const HomeContainerComponet: React.FC = () => {
                     styles={`${GRL_STYLES.greenBGLink} ${GRL_STYLES.defaulLinkComp}`}/>
             }
         />
+        <OurServicesComponent />
     </div>
   )
 }

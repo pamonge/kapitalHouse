@@ -1,15 +1,10 @@
 import React from 'react'
 import { LinkComponent } from '../navigation/LinkComponent'
 import kHImg from '../../assets/img/creditSecurity/KHImage.png'
-
-interface lnkParams {
-  lnk: string;
-  name: string;
-  styles: string;
-}
+import { type linkProps } from '../../types/grlInterfaces'
 
 export const CreditSecurityComponent: React.FC = () => {
-  const data: lnkParams = {
+  const data: linkProps = {
     lnk: '/us',
     name: 'Conoce más sobre nosotros',
     styles: 'px-5 py-3 font-bold  bg-kapital-blue text-kapital-white rounded-2xl'

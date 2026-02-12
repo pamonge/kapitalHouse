@@ -1,10 +1,5 @@
 import React from 'react'
-
-interface descriptionData {
-    title: string,
-    leftSide: React.ReactNode
-    rightSide: React.ReactNode
-}
+import { type descriptionData } from '../../types/grlInterfaces'
 
 export const DescriptionComponent: React.FC<descriptionData> = ({ title, leftSide, rightSide }) => {
   return (
