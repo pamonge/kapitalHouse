@@ -7,10 +7,15 @@ export const BlueBannerComponent: React.FC<blueBannerProps> = ({ content, lnkCom
         <div className='flex flex-col bg-kapital-blue p-13 text-center  gap-10 rounded-2xl font-bold'>
             <div>
                 { content }
-            </div>            
-            <div>
-                { lnkComponent }
             </div>
+            {
+              lnkComponent ? 
+                <div>
+                  { lnkComponent }
+                </div>
+              : ''
+            }            
+            
             
         </div>
     </div>

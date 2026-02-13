@@ -2,6 +2,7 @@ import React from 'react'
 import { LinkComponent } from '../navigation/LinkComponent'
 import kHImg from '../../assets/img/creditSecurity/KHImage.png'
 import { type linkProps } from '../../types/grlInterfaces'
+import { RotatingTextsComponent } from './RotatingTextComponent'
 
 export const CreditSecurityComponent: React.FC = () => {
   const data: linkProps = {
@@ -12,8 +13,7 @@ export const CreditSecurityComponent: React.FC = () => {
   return (
     <div className='flex flex-col gap-20 py-20'>
       <div className='flex flex-col text-5xl font-extrabold text-center gap-3'>
-        <h3>La financiación que sueñas con</h3>
-        <h3 className='text-kapital-lightbue' >la seguridad que buscas</h3>
+        <RotatingTextsComponent />
       </div>
       <div className='flex max-lg:flex-col gap-7'>
         <div className='flex flex-col text-2xl gap-7 '>

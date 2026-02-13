@@ -44,11 +44,11 @@ body {
 }
 
 .img-shadow-drop-left {
-  filter: drop-shadow(-8px 8px 5px rgba(40, 50, 60, 0.9));
+  filter: drop-shadow(-8px 8px 3px rgba(40, 50, 60, 0.9));
 }
 
 .img-shadow-drop-right {
-  filter: drop-shadow(8px 8px 5px rgba(40, 50, 60, 0.9));
+  filter: drop-shadow(8px 8px 3px rgba(40, 50, 60, 0.9));
 }
 
 .img-shadow-drop-blue {

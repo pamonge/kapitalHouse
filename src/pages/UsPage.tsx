@@ -1,7 +1,10 @@
 import React from "react";
+import { UsContainerComponent } from "../components/us/UsContainerComponent";
 
 export const UsPage: React.FC = () => {
   return (
-    <div>UsPage</div>
+    <div className="page" >
+      <UsContainerComponent />
+    </div>
   )
 }
