@@ -5,17 +5,21 @@ import linkedIn from '../../assets/icons/LinkedIn.png'
 import whatsapp from '../../assets/icons/WhatsApp.png'
 import email from '../../assets/icons/Letter.png'
 import smilingMan from '../../assets/contact/smilingMan.png'
+import { NavLink } from 'react-router-dom'
 
 export const TalkToAssistanceContainer: React.FC = () => {
     const contactData: cardData[] = [
         {
             img: whatsapp,
+            title: 'https://wa.me/34631203721',
             text: '+34 631 20 37 21',
         },{
             img: email,
+            title: 'mailto:info@kapitalhouse.es?subject=Consulta desde la web&body=Hola, desearía información al respecto de ...',
             text: 'info@kapitalhouse.es',
         },{
             img: linkedIn,
+            title: 'https://share.google/gxG1kIj0A542M3Yyd',
             text: 'Kapital House Mondial',
         }
     ]
@@ -34,10 +38,13 @@ export const TalkToAssistanceContainer: React.FC = () => {
                         <div className='flex flex-col gap-3'>
                             {
                                 contactData.map((data, key) => (
-                                    <span key={key} className='flex gap-3 items-center'>
-                                        <img className='w-10  ' src={data.img} alt="icon" />
+                                    <NavLink className='flex gap-3 items-center' key={key} to={data.title || '#'} target='_blank'>                
+                                        <img 
+                                            className='w-10  '
+                                            alt={data.text} 
+                                            src={data.img} />
                                         <p>{data.text}</p>
-                                    </span>
+                                    </NavLink>
                                 ))
                             }
                         </div>

@@ -18,7 +18,7 @@ export const RotatingTextsComponent: React.FC = () => {
   }, []);
 
   return (
-    <div className='flex flex-col text-5xl font-extrabold text-center gap-3'>
+    <div className='flex flex-col lg:text-5xl text-2xl font-extrabold text-center gap-3'>
       <h3>La financiación que sueñas con</h3>
       
       <div className='relative h-[1.2em]'> {/* Ajusta la altura según necesites */}

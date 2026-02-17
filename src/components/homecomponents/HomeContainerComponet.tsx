@@ -13,7 +13,7 @@ export const HomeContainerComponet: React.FC = () => {
         <CreditSecurityComponent />
         <BlueBannerComponent 
             content={
-                <div className='flex flex-col gap-3 text-kapital-white text-3xl '>
+                <div className='flex flex-col gap-3 text-kapital-white text-lg lg:text-3xl '>
                     <p>
                         ¿Quieres comprar una vivienda y necesitas financiación?
                     </p>
