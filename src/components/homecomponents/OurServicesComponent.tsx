@@ -15,7 +15,7 @@ export const OurServicesComponent: React.FC = () => {
             <LongCardContainerComponent cardDataProp={longCardData} />
           </div>
           <SlideIn from='right' right={300} type='tween' duration={0.7} delay={1.6} revealInView={true} animateOnce={true} >
-            <div className='flex flex-col justify-center items-center gap-15 p-15' >
+            <div className='flex flex-col justify-center items-center gap-15 px-15 h-full' >
               <p className='text-2xl lg:text-4xl font-bold text-kapital-lightbue ' >¡y mucho más!</p>
               <LinkComponent 
                 lnk='/contact'

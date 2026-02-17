@@ -34,6 +34,7 @@ body {
   gap: 5rem;
   padding: 5rem 10rem;
   max-width: 1440px;
+  text-align: center;
 }
 
 .page {

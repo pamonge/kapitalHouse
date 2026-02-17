@@ -22,7 +22,7 @@ export const NavBarComponent: React.FC = () => {
       {/* Logo */}
       <div className='flex items-center z-20'>
         <Link to='/'>
-          <img className='w-40 md:w-70' src={kapitalLogo} alt="Kapital House" />
+          <img className='min-w-40 w-40 md:w-70' src={kapitalLogo} alt="Kapital House" />
         </Link>        
       </div>
 

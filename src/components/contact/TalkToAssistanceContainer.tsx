@@ -51,7 +51,7 @@ export const TalkToAssistanceContainer: React.FC = () => {
                     </div>
                 }
                 rightSide={
-                    <img className='img-shadow-drop-left' src={smilingMan} alt="smiling man" />
+                    <img className='img-shadow-drop-left ' src={smilingMan} alt="smiling man" />
                 }
             
             />

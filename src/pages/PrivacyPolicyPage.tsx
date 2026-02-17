@@ -2,10 +2,10 @@ import React from "react";
   
 export const PrivacyPolicyPage: React.FC = () => {
     return (
-      <div className='page '>
+      <div className='flex flex-col gap-5 p-10 max-w-[1440px] justify-center '>
         <h2>Política de privacidad</h2>
         <p>
-          <strong>Kapital House</strong> (en adelante, Kapital House), conforme a la legislación vigente en materia de Protección de Datos de Carácter Personal, pone en conocimiento de los usuarios de la página web <strong>www.kapitalhouse.es</strong> (en adelante, la Página) y de su App la Política de Privacidad y Protección de Datos que aplicará en el tratamiento de los datos personales que el Usuario facilite voluntariamente.
+          <strong>Kapital House</strong> (en adelante, kapitalhouse.es), conforme a la legislación vigente en materia de Protección de Datos de Carácter Personal, pone en conocimiento de los usuarios de la página web <strong>www.kapitalhouse.es</strong> (en adelante, la Página) y de su App la Política de Privacidad y Protección de Datos que aplicará en el tratamiento de los datos personales que el Usuario facilite voluntariamente.
         </p>
         <p>
           El Usuario, al proporcionar a Kapital House sus datos de carácter personal a través de los formularios electrónicos de la Web y de la App, consiente expresamente que Kapital House pueda tratar esos datos en los términos de esta cláusula de Política de Privacidad y Protección de Datos y para los fines aquí expresados. Igualmente el Usuario, en el caso de formalizar el Contrato de Intermediación con Kapital House, consiente que las llamadas telefónicas que le efectúen los agentes puedan ser grabadas. Con la finalidad de recabar la necesaria información y de prestar correctamente el servicio de asesoramiento por parte los agentes de Kapital House, se deben efectuar llamadas telefónicas al Usuario, que en ocasiones podrán ser grabadas. Al aceptar el Usuario tanto el contenido de la presente Política de Privacidad como el del Contrato de Intermediación, está prestando su consentimiento a que se puedan efectuar dichas grabaciones de llamadas.
@@ -122,7 +122,7 @@ export const PrivacyPolicyPage: React.FC = () => {
           Para verificar que se encuentra en un entorno seguro, el Cliente debe revisar que la dirección de la Página de verificación comience por https:// También puede identificar la Página como segura cuando aparezca el icono de un candado en la barra de dirección de su navegador. Por último, también puede verificar la presencia del certificado SSL comprobando las propiedades de la Página en su navegador, para lo cual deberá consultar las características del mismo. Cualquier cambio realizado en la Política de Privacidad y en las prácticas de administración de la información se reflejará de forma oportuna, pudiendo la Compañía agregar, modificar o eliminar dicha política de privacidad cuando lo estime necesario.
         </p>
         <p>
-          <strong>Última actualización:</strong> 30 de Octubre de 2025.
+          <strong>Última actualización:</strong> 17 de febrero de 2026.
         </p>
       </div>
     );

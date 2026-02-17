@@ -284,7 +284,7 @@ export const FormComponent: React.FC = () => {
               <label htmlFor="politicas" className="text-sm text-gray-700 cursor-pointer">
                 He leído y acepto la{' '}
                 <a 
-                  href="/politicas-privacidad" 
+                  href="/privacypolicy" 
                   className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -318,7 +318,7 @@ export const FormComponent: React.FC = () => {
               <label htmlFor="avisoLegal" className="text-sm text-gray-700 cursor-pointer">
                 He leído y acepto el{' '}
                 <a 
-                  href="/aviso-legal" 
+                  href="/legal" 
                   className="text-blue-600 hover:text-blue-800 hover:underline font-medium"
                   target="_blank"
                   rel="noopener noreferrer"
