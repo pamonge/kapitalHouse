@@ -3,9 +3,9 @@ import { FormComponent } from './FormComponent'
 
 export const ContactContainerComponent: React.FC = () => {
   return (
-    <div className='flex max-md:flex-col bg-kapital-gradientform rounded-t-[5rem] px-15 py-25 justify-between relative z-10'>
+    <div className='flex max-lg:flex-col bg-kapital-gradientform rounded-t-[5rem] px-3 lg:px-15 py-25 justify-between relative z-10 gap-7'>
         <div className='flex flex-col gap-10 lg:w-1/2 text-kapital-white'>
-            <div className='flex flex-col gap-3 text-5xl font-bold '>
+            <div className='flex flex-col gap-3 text-2xl lg:text-5xl font-bold '>
                 <p>
                     Comprar tu casa no tiene por qué ser complicado. 
                 </p>
@@ -14,7 +14,7 @@ export const ContactContainerComponent: React.FC = () => {
                 </p>
             </div>
             <div>
-                <p className='text-3xl'>
+                <p className='lg:text-3xl'>
                     Completa el formulario y te informaremos sin compromiso.
                 </p>
             </div>

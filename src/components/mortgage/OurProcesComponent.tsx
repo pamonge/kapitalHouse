@@ -6,8 +6,8 @@ export const OurProcesComponent: React.FC = () => {
   
     return (
         <div className='flex flex-col gap-20 justify-center items-center'>
-            <p className='text-3xl font-bold' >¿Cómo es nuestro proceso?</p>
-            <div className='flex justify-evenly' >
+            <p className='text-xl lg:text-3xl font-bold' >¿Cómo es nuestro proceso?</p>
+            <div className='flex max-lg:flex-col justify-evenly' >
                 {
                     ourProcessData.map((item, key) => (
                         <WhiteCardComponent 

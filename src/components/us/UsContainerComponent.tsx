@@ -6,13 +6,13 @@ import { ActingIndependentComponent } from './ActingIndependentComponent'
 
 export const UsContainerComponent: React.FC = () => {
   return (
-    <div >
+    <div className='flex flex-col justify-center items-center' >
         <div className='container '>
             <DescriptionComponent 
                 title='Personas que entienden tus objetivos'
                 leftSide={
                     <div className='flex flex-col gap-5 '>
-                        <p className='text-3xl font-bold' >
+                        <p className='text-lg lg:text-3xl font-bold' >
                             Te acompañamos en cada paso para que tomes la mejor decisión financiera.
                         </p>
                         <p className='text-xl leading-15' >
@@ -27,13 +27,13 @@ export const UsContainerComponent: React.FC = () => {
 
             <BlueBannerComponent 
                 content={
-                    <p className='text-2xl' >
+                    <p className='lg:text-2xl' >
                         Nuestra experiencia nos permite anticiparnos a posibles obstáculos y ahorrarte tiempo, gestiones innecesarias y visitas a múltiples bancos. 
                     </p>
                 }        
             />
         </div>
-        
+
         <ActingIndependentComponent />
 
     </div>

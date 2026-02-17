@@ -7,8 +7,8 @@ export const MortgageBlueBannerComponent: React.FC = () => {
         <BlueBannerComponent 
             content={
                 <div className='flex flex-col text-center gap-5'>
-                    <p className='text-2xl font-bold'>¡Hipotecas hasta el 100% del valor de la vivienda!</p>
-                    <p className='text-xl' >Estudiamos tu caso y buscamos la mejor opción para ti.</p>
+                    <p className='lg:text-2xl font-bold'>¡Hipotecas hasta el 100% del valor de la vivienda!</p>
+                    <p className='lg:text-xl' >Estudiamos tu caso y buscamos la mejor opción para ti.</p>
                 </div>   
             }
         />

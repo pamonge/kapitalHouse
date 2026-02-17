@@ -151,7 +151,7 @@ export const FormComponent: React.FC = () => {
   }, [formData]);
 
   return (
-    <div className=" w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className=" w-full max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
 
       {submitSuccess && (
         <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg animate-fadeIn">
@@ -341,7 +341,7 @@ export const FormComponent: React.FC = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-1/3 py-3 px-4 rounded-lg font-semibold text-black transition transform hover:scale-[1.05] ${
+            className={`max-lg:w-fit w-1/3 py-3 px-4 rounded-lg font-semibold text-black transition transform hover:scale-[1.05] ${
               isSubmitting
                 ? 'bg-kapital-lightbue cursor-not-allowed'
                 : 'bg-kapital-green focus:ring-2 focus:ring-offset-2'

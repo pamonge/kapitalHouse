@@ -1,7 +1,7 @@
 // WhiteCardComponent - OurProcesComponent
 export interface cardData {
     img: string,
-    title: string,
+    title?: string,
     text?: string,
 }
 

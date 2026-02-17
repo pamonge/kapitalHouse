@@ -7,6 +7,9 @@ import { UsPage } from './pages/UsPage'
 import { MortgagePage } from './pages/MortgagePage'
 import { ContactPage } from './pages/ContactPage'
 import { ContactContainerComponent } from './components/contact/ContactContainerComponent'
+import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage'
+import { LegalAdvertisingPage } from './pages/LegalAdvertisingPage'
+import { CookiesPolicyPage } from './pages/CookiesPolicyPage'
 
 function App() {
 
@@ -17,7 +20,10 @@ function App() {
         <Route path='/' element={ <HomePage /> } />
         <Route path='/us' element={ <UsPage /> } />
         <Route path='/mortgage' element={ <MortgagePage /> } />
-        <Route path='/contact' element={ <ContactPage /> } />        
+        <Route path='/contact' element={ <ContactPage /> } />   
+        <Route path='/privacypolicy' element={ <PrivacyPolicyPage /> } />
+        <Route path='/legal' element={ <LegalAdvertisingPage /> } />
+        <Route path='/cookies' element={ <CookiesPolicyPage /> } />     
       </Routes>
       <ContactContainerComponent />
       <FooterComponent />

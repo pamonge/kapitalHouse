@@ -8,9 +8,8 @@ export const LongCardContainerComponent: React.FC<cardContainerData> = ({ cardDa
     <div className='flex flex-col gap-10 w-full' >
         {
             cardDataProp.map(( data, key ) => (
-                <SlideIn from='left' left={300} type='tween' duration={0.7} delay={key * 0.8} revealInView={true} animateOnce={false}>
+                <SlideIn key={key} from='left' left={300} type='tween' duration={0.7} delay={key * 0.8} revealInView={true} animateOnce={true}>
                     <LongCardComponent
-                        key={key}
                         img={data.img}
                         title={data.title}
                     />
