@@ -35,7 +35,7 @@ export const HeroComponent: React.FC = () => {
     <>
       <div className='relative w-full h-screen bg-cover bg-no-repeat opacity-95' style={{ backgroundImage: `linear-gradient(350deg, rgba(255, 255, 255, 0.5) 20.97%, rgba(24, 64, 100, 0.7) 47.74%), url(${subtract})` }}>
         <div className='flex flex-col h-screen gap-30 px-3 lg:px-20 justify-center bg-he'>
-          <div className='w-full flex flex-col gap-10 xl:max-w-1/2'>
+          <div className='w-full flex flex-col gap-10 xl:max-w-1/2 max-lg:items-center max-lg:text-center'>
             <p className='text-white text-6xl max-lg:text-3xl font-bold'>
               La mejor hipoteca para tu nuevo hogar
             </p>
