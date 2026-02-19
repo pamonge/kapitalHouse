@@ -1,15 +1,23 @@
-import React, { useState, type ChangeEvent, type SyntheticEvent, useCallback } from 'react';
+import React, { useState, useRef, type ChangeEvent, type SyntheticEvent, useCallback } from 'react';
+import emailjs from '@emailjs/browser';
 import { type FormData, type FormErrors } from '../../types/grlInterfaces';
+
+// 👇 Reemplaza con tus credenciales de EmailJS (https://www.emailjs.com/)
+const EMAILJS_SERVICE_ID = 'service_vysorfc';   // ID del servicio
+const EMAILJS_TEMPLATE_ID = 'template_l7ebwtz'; // ID del template
+const EMAILJS_PUBLIC_KEY = 'pJYqPbAthQ_U3CSDd';   // Clave pública
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^[0-9+\-\s()]{9,}$/;
 
 export const FormComponent: React.FC = () => {
+  const formRef = useRef<HTMLFormElement>(null);
+
   const [formData, setFormData] = useState<FormData>({
-    nombre: '',
-    correo: '',
-    telefono: '',
-    mensaje: '',
+    name: '',
+    email: '',
+    title: '',
+    message: '',
     politicas: false,
     avisoLegal: false
   });
@@ -49,26 +57,26 @@ export const FormComponent: React.FC = () => {
   // Validación individual por campo
   const validateField = (name: keyof FormData, value: string | boolean): string | undefined => {
     switch (name) {
-      case 'nombre':
+      case 'name':
         return !value || (typeof value === 'string' && value.length <= 3)
           ? 'El nombre es obligatorio'
           : undefined;
 
-      case 'correo':
+      case 'email':
         if (!value) return 'El correo es obligatorio';
         if (typeof value === 'string' && !EMAIL_REGEX.test(value)) {
           return 'Correo electrónico no válido';
         }
         return undefined;
       
-      case 'telefono':
+      case 'title':
         if (!value) return 'El teléfono es obligatorio';
         if (typeof value === 'string' && !PHONE_REGEX.test(value)) {
           return 'Teléfono no válido';
         }
         return undefined;
       
-      case 'mensaje':
+      case 'message':
         return !value ? 'El mensaje es obligatorio' : undefined;
       
       case 'politicas':
@@ -110,19 +118,24 @@ export const FormComponent: React.FC = () => {
     setErrors(prev => ({ ...prev, submit: undefined }));
 
     try {
-      // Simulación de envío a API
-      console.log('Datos a enviar:', formData);
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      if (!formRef.current) throw new Error('Formulario no encontrado');
+
+      await emailjs.sendForm(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
       
       // Éxito
       setSubmitSuccess(true);
       
       // Resetear formulario
       setFormData({
-        nombre: '',
-        correo: '',
-        telefono: '',
-        mensaje: '',
+        name: '',
+        email: '',
+        title: '',
+        message: '',
         politicas: false,
         avisoLegal: false
       });
@@ -160,107 +173,107 @@ export const FormComponent: React.FC = () => {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-        {/* Campo Nombre */}
+      <form ref={formRef} onSubmit={handleSubmit} className="space-y-6" noValidate>
+        {/* Campo Nombre - EmailJS: {{name}} */}
         <div className="space-y-2">
-          <label htmlFor="nombre" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700">
             Nombre completo *
           </label>
           <input
             type="text"
-            id="nombre"
-            name="nombre"
-            value={formData.nombre}
+            id="name"
+            name="name"
+            value={formData.name}
             onChange={handleInputChange}
-            onBlur={() => handleBlur('nombre')}
+            onBlur={() => handleBlur('name')}
             className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition ${
-              errors.nombre ? 'border-red-500' : 'border-gray-300'
+              errors.name ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="Escribe tu nombre completo"
-            aria-invalid={!!errors.nombre}
-            aria-describedby={errors.nombre ? 'error-nombre' : undefined}
+            aria-invalid={!!errors.name}
+            aria-describedby={errors.name ? 'error-name' : undefined}
           />
-          {errors.nombre && (
-            <p id="error-nombre" className="text-red-500 text-sm mt-1">
-              {errors.nombre}
+          {errors.name && (
+            <p id="error-name" className="text-red-500 text-sm mt-1">
+              {errors.name}
             </p>
           )}
         </div>
 
-        {/* Campo Correo */}
+        {/* Campo Correo - EmailJS: {{email}} */}
         <div className="space-y-2">
-          <label htmlFor="correo" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
             Correo electrónico *
           </label>
           <input
             type="email"
-            id="correo"
-            name="correo"
-            value={formData.correo}
+            id="email"
+            name="email"
+            value={formData.email}
             onChange={handleInputChange}
-            onBlur={() => handleBlur('correo')}
+            onBlur={() => handleBlur('email')}
             className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition ${
-              errors.correo ? 'border-red-500' : 'border-gray-300'
+              errors.email ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="ejemplo@correo.com"
-            aria-invalid={!!errors.correo}
-            aria-describedby={errors.correo ? 'error-correo' : undefined}
+            aria-invalid={!!errors.email}
+            aria-describedby={errors.email ? 'error-email' : undefined}
           />
-          {errors.correo && (
-            <p id="error-correo" className="text-red-500 text-sm mt-1">
-              {errors.correo}
+          {errors.email && (
+            <p id="error-email" className="text-red-500 text-sm mt-1">
+              {errors.email}
             </p>
           )}
         </div>
 
-        {/* Campo Teléfono */}
+        {/* Campo Teléfono - EmailJS: {{title}} */}
         <div className="space-y-2">
-          <label htmlFor="telefono" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="title" className="block text-sm font-medium text-gray-700">
             Teléfono *
           </label>
           <input
             type="tel"
-            id="telefono"
-            name="telefono"
-            value={formData.telefono}
+            id="title"
+            name="title"
+            value={formData.title}
             onChange={handleInputChange}
-            onBlur={() => handleBlur('telefono')}
+            onBlur={() => handleBlur('title')}
             className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition ${
-              errors.telefono ? 'border-red-500' : 'border-gray-300'
+              errors.title ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="+34 123 456 789"
-            aria-invalid={!!errors.telefono}
-            aria-describedby={errors.telefono ? 'error-telefono' : undefined}
+            aria-invalid={!!errors.title}
+            aria-describedby={errors.title ? 'error-title' : undefined}
           />
-          {errors.telefono && (
-            <p id="error-telefono" className="text-red-500 text-sm mt-1">
-              {errors.telefono}
+          {errors.title && (
+            <p id="error-title" className="text-red-500 text-sm mt-1">
+              {errors.title}
             </p>
           )}
         </div>
 
-        {/* Campo Mensaje */}
+        {/* Campo Mensaje - EmailJS: {{message}} */}
         <div className="space-y-2">
-          <label htmlFor="mensaje" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="message" className="block text-sm font-medium text-gray-700">
             Mensaje *
           </label>
           <textarea
-            id="mensaje"
-            name="mensaje"
-            value={formData.mensaje}
+            id="message"
+            name="message"
+            value={formData.message}
             onChange={handleInputChange}
-            onBlur={() => handleBlur('mensaje')}
+            onBlur={() => handleBlur('message')}
             rows={5}
             className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition resize-none ${
-              errors.mensaje ? 'border-red-500' : 'border-gray-300'
+              errors.message ? 'border-red-500' : 'border-gray-300'
             }`}
             placeholder="Escribe tu mensaje aquí..."
-            aria-invalid={!!errors.mensaje}
-            aria-describedby={errors.mensaje ? 'error-mensaje' : undefined}
+            aria-invalid={!!errors.message}
+            aria-describedby={errors.message ? 'error-message' : undefined}
           />
-          {errors.mensaje && (
-            <p id="error-mensaje" className="text-red-500 text-sm mt-1">
-              {errors.mensaje}
+          {errors.message && (
+            <p id="error-message" className="text-red-500 text-sm mt-1">
+              {errors.message}
             </p>
           )}
         </div>

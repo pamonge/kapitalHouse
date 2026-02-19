@@ -10,22 +10,22 @@ export interface cardContainerData {
     cardDataProp: cardData[],
 }
 
-// FormComponent
+// FormComponent - keys alineados con EmailJS (name, email, title, message)
 export interface FormData {
-    nombre: string;
-    correo: string;
-    telefono: string;
-    mensaje: string;
+    name: string;
+    email: string;
+    title: string;
+    message: string;
     politicas: boolean;
     avisoLegal: boolean;
   }
   
 // FormComponent
 export interface FormErrors {
-    nombre?: string;
-    correo?: string;
-    telefono?: string;
-    mensaje?: string;
+    name?: string;
+    email?: string;
+    title?: string;
+    message?: string;
     politicas?: string;
     avisoLegal?: string;
     submit?: string;
