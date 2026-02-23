@@ -1,5 +1,5 @@
 import React from 'react'
-import pem from '../../assets/pem-webservice.webp'
+import pem from '../../assets/pem-webservice.png'
 import { LinkComponent } from '../navigation/LinkComponent'
 import copyRightStyles from '../../styles/CopyRightComponentStyles'
 
