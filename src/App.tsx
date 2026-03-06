@@ -10,6 +10,8 @@ import { ContactContainerComponent } from './components/contact/ContactContainer
 import { PrivacyPolicyPage } from './pages/PrivacyPolicyPage'
 import { LegalAdvertisingPage } from './pages/LegalAdvertisingPage'
 import { CookiesPolicyPage } from './pages/CookiesPolicyPage'
+// import { MortgageCalculatorPage } from './pages/MortgageCalculatorPage'
+import { CreditSimulatorPage } from './pages/CreditSimulatorPage'
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
         <Route path='/' element={ <HomePage /> } />
         <Route path='/us' element={ <UsPage /> } />
         <Route path='/mortgage' element={ <MortgagePage /> } />
+        {/* <Route path='/calculadora-hipotecas' element={ <MortgageCalculatorPage /> } /> */}
+        <Route path='/cred-simulator' element={ <CreditSimulatorPage /> } />
         <Route path='/contact' element={ <ContactPage /> } />   
         <Route path='/privacypolicy' element={ <PrivacyPolicyPage /> } />
         <Route path='/legal' element={ <LegalAdvertisingPage /> } />

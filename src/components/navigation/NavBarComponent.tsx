@@ -11,6 +11,8 @@ export const NavBarComponent: React.FC = () => {
   const LINKSLIST: linkProps[] = [
     {lnk: '/', name: 'Inicio'},
     {lnk: '/mortgage', name: 'Hipotecas'},
+    // {lnk: '/calculadora-hipotecas', name: 'Calculadora'},
+    // {lnk: '/cred-simulator', name: 'Simulador'},
     {lnk: '/us', name: 'Nosotros'},
     {lnk: '/contact', name: 'Contacto', styles: `${GRL_STYLES.greenBGLink} ${GRL_STYLES.defaulLinkComp}`}
   ];

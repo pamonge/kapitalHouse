@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# Kapital House
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Sitio web corporativo para **Kapital House**, empresa de servicios hipotecarios y créditos para vivienda en España.
 
-Currently, two official plugins are available:
+## Tecnologías
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React 18 + TypeScript
+- Vite 7
+- Tailwind CSS v4
+- React Router DOM v7
+- EmailJS (formularios de contacto)
 
-## React Compiler
+## Inicio rápido
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+```bash
+# Instalar dependencias
+npm install
 
-## Expanding the ESLint configuration
+# Desarrollo
+npm run dev
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Build de producción
+npm run build
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Vista previa del build
+npm preview
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Estructura principal
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **`public/`** – robots.txt, sitemap.xml (SEO)
+- **`src/pages/`** – Páginas principales
+- **`src/components/`** – Componentes reutilizables
+- **`docs/`** – Documentación y bitácora del proyecto
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Páginas
+
+| Ruta | Descripción |
+|------|-------------|
+| `/` | Inicio |
+| `/us` | Nosotros |
+| `/mortgage` | Hipotecas |
+| `/cred-simulator` | Simulador de crédito |
+| `/contact` | Contacto (Particulares / Empresas) |
+| `/privacypolicy` | Política de Privacidad |
+| `/legal` | Aviso Legal |
+| `/cookies` | Política de Cookies |
+
+## Documentación
+
+- **[docs/project-log.md](docs/project-log.md)** – Bitácora del proyecto: estado, pendientes, lecciones aprendidas y notas técnicas.
+
+## SEO
+
+- `robots.txt` – Directivas para buscadores
+- `sitemap.xml` – Mapa del sitio
+
+URL base: https://kapitalhouse.es

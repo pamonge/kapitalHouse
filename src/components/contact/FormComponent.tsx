@@ -1,6 +1,8 @@
 import React, { useState, useRef, type ChangeEvent, type SyntheticEvent, useCallback } from 'react';
 import emailjs from '@emailjs/browser';
-import { type FormData, type FormErrors } from '../../types/grlInterfaces';
+import { type FormData, type FormErrors, type FormVariant, TIPO_CONSULTA_OPCIONES, TIPO_CONSULTA_CON_SIMULADOR } from '../../types/grlInterfaces';
+import { SimulatorModal } from './SimulatorModal';
+import { setPendingContactForm } from '../simulator/CreditSimulatorComponent';
 
 // 👇 Reemplaza con tus credenciales de EmailJS (https://www.emailjs.com/)
 const EMAILJS_SERVICE_ID = 'service_vysorfc';   // ID del servicio
@@ -10,13 +12,41 @@ const EMAILJS_PUBLIC_KEY = 'pJYqPbAthQ_U3CSDd';   // Clave pública
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^[0-9+\-\s()]{9,}$/;
 
-export const FormComponent: React.FC = () => {
+const LABELS = {
+  particulares: {
+    nameLabel: 'Nombre completo *',
+    namePlaceholder: 'Escribe tu nombre completo',
+    nameError: 'El nombre es obligatorio',
+    emailLabel: 'Correo electrónico *',
+    messageLabel: 'Mensaje *',
+    messagePlaceholder: 'Escribe tu mensaje aquí...',
+    submitText: 'Enviar Mensaje',
+  },
+  empresas: {
+    nameLabel: 'Nombre de la empresa *',
+    namePlaceholder: 'Nombre o razón social de tu empresa',
+    nameError: 'El nombre de la empresa es obligatorio',
+    emailLabel: 'Correo electrónico de contacto *',
+    messageLabel: 'Describe tu consulta o proyecto *',
+    messagePlaceholder: 'Cuéntanos tu proyecto, necesidades de financiación...',
+    submitText: 'Enviar Mensaje',
+  },
+} as const;
+
+interface FormComponentProps {
+  variant?: FormVariant;
+  withTabs?: boolean;
+}
+
+export const FormComponent: React.FC<FormComponentProps> = ({ variant = 'particulares', withTabs = false }) => {
+  const labels = LABELS[variant];
   const formRef = useRef<HTMLFormElement>(null);
 
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     title: '',
+    tipoConsulta: '',
     message: '',
     politicas: false,
     avisoLegal: false
@@ -25,10 +55,11 @@ export const FormComponent: React.FC = () => {
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [showSimulatorModal, setShowSimulatorModal] = useState(false);
 
   // Manejar cambios con useCallback para mejor rendimiento
   const handleInputChange = useCallback((
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value, type } = e.target;
 
@@ -59,7 +90,7 @@ export const FormComponent: React.FC = () => {
     switch (name) {
       case 'name':
         return !value || (typeof value === 'string' && value.length <= 3)
-          ? 'El nombre es obligatorio'
+          ? labels.nameError
           : undefined;
 
       case 'email':
@@ -75,6 +106,9 @@ export const FormComponent: React.FC = () => {
           return 'Teléfono no válido';
         }
         return undefined;
+
+      case 'tipoConsulta':
+        return variant === 'particulares' && !value ? 'Selecciona el tipo de consulta' : undefined;
       
       case 'message':
         return !value ? 'El mensaje es obligatorio' : undefined;
@@ -93,10 +127,12 @@ export const FormComponent: React.FC = () => {
   // Validación completa del formulario
   const validateForm = useCallback((): boolean => {
     const newErrors: FormErrors = {};
+    const keysToValidate: (keyof FormData)[] = variant === 'particulares'
+      ? ['name', 'email', 'title', 'tipoConsulta', 'message', 'politicas', 'avisoLegal']
+      : ['name', 'email', 'title', 'message', 'politicas', 'avisoLegal'];
     
-    Object.keys(formData).forEach(key => {
-      const fieldName = key as keyof FormData;
-      const error = validateField(fieldName, formData[fieldName]);
+    keysToValidate.forEach(fieldName => {
+      const error = validateField(fieldName, formData[fieldName] ?? '');
       if (error) {
         newErrors[fieldName] = error;
       }
@@ -104,7 +140,64 @@ export const FormComponent: React.FC = () => {
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
-  }, [formData]);
+  }, [formData, variant]);
+
+  const buildMessageForEmail = useCallback((extraSuffix?: string) => {
+    const base = variant === 'particulares' && formData.tipoConsulta
+      ? `Tipo de consulta: ${formData.tipoConsulta}\n\n${formData.message}`
+      : formData.message;
+    return extraSuffix ? `${base}\n\n${extraSuffix}` : base;
+  }, [formData.message, formData.tipoConsulta, variant]);
+
+  const sendEmail = useCallback(async (messageBody: string) => {
+    const params = {
+      name: formData.name,
+      email: formData.email,
+      title: formData.title,
+      message: messageBody,
+    };
+    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params, { publicKey: EMAILJS_PUBLIC_KEY });
+  }, [formData.name, formData.email, formData.title]);
+
+  const resetFormAndSuccess = useCallback(() => {
+    setFormData({
+      name: '',
+      email: '',
+      title: '',
+      tipoConsulta: '',
+      message: '',
+      politicas: false,
+      avisoLegal: false
+    });
+    setSubmitSuccess(true);
+    setTimeout(() => setSubmitSuccess(false), 5000);
+  }, []);
+
+  const handleModalNo = useCallback(async () => {
+    setShowSimulatorModal(false);
+    setIsSubmitting(true);
+    setErrors(prev => ({ ...prev, submit: undefined }));
+    try {
+      await sendEmail(buildMessageForEmail('El cliente no usó el simulador de Hipoteca'));
+      resetFormAndSuccess();
+    } catch (error) {
+      console.error('Error de envío:', error);
+      setErrors(prev => ({ ...prev, submit: 'Error al enviar el formulario. Por favor, inténtalo de nuevo.' }));
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [sendEmail, buildMessageForEmail, resetFormAndSuccess]);
+
+  const handleModalSi = useCallback(() => {
+    setShowSimulatorModal(false);
+    setPendingContactForm({
+      name: formData.name,
+      email: formData.email,
+      title: formData.title,
+      message: buildMessageForEmail(),
+    });
+    setFormData({ name: '', email: '', title: '', tipoConsulta: '', message: '', politicas: false, avisoLegal: false });
+  }, [formData.name, formData.email, formData.title, buildMessageForEmail]);
 
   // Manejar envío con SyntheticEvent
   const handleSubmit = async (e: SyntheticEvent<HTMLFormElement>) => {
@@ -114,35 +207,22 @@ export const FormComponent: React.FC = () => {
       return;
     }
 
+    const needsSimulatorModal = variant === 'particulares' 
+      && formData.tipoConsulta 
+      && (TIPO_CONSULTA_CON_SIMULADOR as readonly string[]).includes(formData.tipoConsulta);
+
+    if (needsSimulatorModal) {
+      setShowSimulatorModal(true);
+      return;
+    }
+
     setIsSubmitting(true);
     setErrors(prev => ({ ...prev, submit: undefined }));
 
     try {
-      if (!formRef.current) throw new Error('Formulario no encontrado');
-
-      await emailjs.sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        formRef.current,
-        { publicKey: EMAILJS_PUBLIC_KEY }
-      );
-      
-      // Éxito
-      setSubmitSuccess(true);
-      
-      // Resetear formulario
-      setFormData({
-        name: '',
-        email: '',
-        title: '',
-        message: '',
-        politicas: false,
-        avisoLegal: false
-      });
-      
-      // Ocultar mensaje de éxito después de 5 segundos
-      setTimeout(() => setSubmitSuccess(false), 5000);
-      
+      const messageBody = buildMessageForEmail();
+      await sendEmail(messageBody);
+      resetFormAndSuccess();
     } catch (error) {
       console.error('Error de envío:', error);
       setErrors(prev => ({
@@ -156,7 +236,8 @@ export const FormComponent: React.FC = () => {
 
   // Función para manejar blur y validar campo individual
   const handleBlur = useCallback((fieldName: keyof FormData) => {
-    const error = validateField(fieldName, formData[fieldName]);
+    const value = formData[fieldName];
+    const error = validateField(fieldName, value === undefined ? '' : value);
     setErrors(prev => ({
       ...prev,
       [fieldName]: error
@@ -164,20 +245,24 @@ export const FormComponent: React.FC = () => {
   }, [formData]);
 
   return (
-    <div className=" w-full max-w-lg mx-auto p-6 bg-white rounded-lg shadow-lg">
+    <div className={`w-full max-w-lg mx-auto p-6 bg-white shadow-lg ${withTabs ? 'rounded-b-lg rounded-t-none' : 'rounded-lg'}`}>
 
       {submitSuccess && (
         <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg animate-fadeIn">
-          <p className="font-semibold">¡Formulario enviado con éxito!</p>
+          <p className="font-semibold">¡Muchas gracias! Su consulta se envió con éxito.</p>
           <p>Nos pondremos en contacto contigo en breve.</p>
         </div>
+      )}
+
+      {showSimulatorModal && (
+        <SimulatorModal onConfirm={handleModalSi} onDecline={handleModalNo} />
       )}
 
       <form ref={formRef} onSubmit={handleSubmit} className="space-y-6" noValidate>
         {/* Campo Nombre - EmailJS: {{name}} */}
         <div className="space-y-2">
           <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-            Nombre completo *
+            {labels.nameLabel}
           </label>
           <input
             type="text"
@@ -189,7 +274,7 @@ export const FormComponent: React.FC = () => {
             className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition ${
               errors.name ? 'border-red-500' : 'border-gray-300'
             }`}
-            placeholder="Escribe tu nombre completo"
+            placeholder={labels.namePlaceholder}
             aria-invalid={!!errors.name}
             aria-describedby={errors.name ? 'error-name' : undefined}
           />
@@ -203,7 +288,7 @@ export const FormComponent: React.FC = () => {
         {/* Campo Correo - EmailJS: {{email}} */}
         <div className="space-y-2">
           <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Correo electrónico *
+            {labels.emailLabel}
           </label>
           <input
             type="email"
@@ -252,10 +337,41 @@ export const FormComponent: React.FC = () => {
           )}
         </div>
 
+        {/* Tipo de consulta - solo Particulares */}
+        {variant === 'particulares' && (
+          <div className="space-y-2">
+            <label htmlFor="tipoConsulta" className="block text-sm font-medium text-gray-700">
+              Tipo de consulta *
+            </label>
+            <select
+              id="tipoConsulta"
+              name="tipoConsulta"
+              value={formData.tipoConsulta ?? ''}
+              onChange={handleInputChange}
+              onBlur={() => handleBlur('tipoConsulta')}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition ${
+                errors.tipoConsulta ? 'border-red-500' : 'border-gray-300'
+              }`}
+              aria-invalid={!!errors.tipoConsulta}
+              aria-describedby={errors.tipoConsulta ? 'error-tipoConsulta' : undefined}
+            >
+              <option value="">Seleccione una opción...</option>
+              {TIPO_CONSULTA_OPCIONES.map((opcion) => (
+                <option key={opcion} value={opcion}>{opcion}</option>
+              ))}
+            </select>
+            {errors.tipoConsulta && (
+              <p id="error-tipoConsulta" className="text-red-500 text-sm mt-1">
+                {errors.tipoConsulta}
+              </p>
+            )}
+          </div>
+        )}
+
         {/* Campo Mensaje - EmailJS: {{message}} */}
         <div className="space-y-2">
           <label htmlFor="message" className="block text-sm font-medium text-gray-700">
-            Mensaje *
+            {labels.messageLabel}
           </label>
           <textarea
             id="message"
@@ -267,7 +383,7 @@ export const FormComponent: React.FC = () => {
             className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition resize-none ${
               errors.message ? 'border-red-500' : 'border-gray-300'
             }`}
-            placeholder="Escribe tu mensaje aquí..."
+            placeholder={labels.messagePlaceholder}
             aria-invalid={!!errors.message}
             aria-describedby={errors.message ? 'error-message' : undefined}
           />
@@ -369,7 +485,7 @@ export const FormComponent: React.FC = () => {
                 Enviando...
               </span>
             ) : (
-              'Enviar Mensaje'
+              labels.submitText
             )}
           </button>
         </div>

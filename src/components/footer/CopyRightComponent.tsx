@@ -15,11 +15,11 @@ export const CopyRightComponent: React.FC = () => {
         <div>
             <p>©2026 Kapital House.  </p>
         </div>
-        {/* Aviso legal | Politicas de Privacidad | Cookies */}
+        {/* Aviso legal | Políticas de Privacidad | Cookies */}
         <div className={copyRightStyles.linkContainer}>
-            <LinkComponent lnk='/#' name='Aviso legal ' styles='flex items-center'/>
-            <LinkComponent lnk='/#' name='Politicas de Privacidad' styles='flex items-center'/>
-            <LinkComponent lnk='/#' name='Cookies' styles='flex items-center'/>
+            <LinkComponent lnk='/legal' name='Aviso legal' styles='flex items-center hover:underline'/>
+            <LinkComponent lnk='/privacypolicy' name='Políticas de Privacidad' styles='flex items-center hover:underline'/>
+            <LinkComponent lnk='/cookies' name='Cookies' styles='flex items-center hover:underline'/>
         </div>
     </div>
   )

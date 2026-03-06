@@ -1,0 +1,8 @@
+# robots.txt para Kapital House
+# https://kapitalhouse.es
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://kapitalhouse.es/sitemap.xml
