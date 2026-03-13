@@ -171,6 +171,7 @@ export const FormComponent: React.FC<FormComponentProps> = ({ variant = 'particu
     });
     setSubmitSuccess(true);
     setTimeout(() => setSubmitSuccess(false), 5000);
+    window.scrollTo(0, 0);
   }, []);
 
   const handleModalNo = useCallback(async () => {
@@ -245,7 +246,7 @@ export const FormComponent: React.FC<FormComponentProps> = ({ variant = 'particu
   }, [formData]);
 
   return (
-    <div className={`w-full max-w-lg mx-auto p-6 bg-white shadow-lg ${withTabs ? 'rounded-b-lg rounded-t-none' : 'rounded-lg'}`}>
+    <div className={`w-full max-w-lg mx-auto p-4 sm:p-6 bg-white shadow-lg min-w-0 box-border ${withTabs ? 'rounded-b-lg rounded-t-none' : 'rounded-lg'}`}>
 
       {submitSuccess && (
         <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-lg animate-fadeIn">

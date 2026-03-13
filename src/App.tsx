@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import './App.css'
+import { ScrollToTop } from './components/common/ScrollToTop'
 import { NavBarComponent } from './components/navigation/NavBarComponent'
 import { HomePage } from './pages/HomePage'
 import { FooterComponent } from './components/footer/FooterComponent'
@@ -16,7 +17,8 @@ import { CreditSimulatorPage } from './pages/CreditSimulatorPage'
 function App() {
 
   return (
-    <div>
+    <div className="min-w-0 overflow-x-hidden w-full max-w-[100vw]">
+      <ScrollToTop />
       <NavBarComponent />
       <Routes>
         <Route path='/' element={ <HomePage /> } />
